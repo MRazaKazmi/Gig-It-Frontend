@@ -1,0 +1,40 @@
+.auth-page {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.auth-page h2 {
+  margin-bottom: 20px;
+}
+
+.auth-page form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-page input,
+.auth-page select,
+.auth-page button {
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.auth-page button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.auth-page button:hover {
+  background-color: #45a049;
+}
+
+.auth-page p {
+  color: red;
+}

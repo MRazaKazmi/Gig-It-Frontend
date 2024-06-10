@@ -1,0 +1,133 @@
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import '../ProposalFormPage.css';
+
+const parseJwt = (token) => {
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch (e) {
+    return null;
+  }
+};
+
+const ProposalFormPage = () => {
+  const { gigid } = useParams();
+  const [token, setToken] = useState('');
+  const [form, setForm] = useState({
+    gigid,
+    userid: '',
+    title: '',
+    proposalText: '',
+    budget: '',
+    status: 'Pending', // default status
+    dateSubmitted: new Date().toISOString().split('T')[0], // current date in YYYY-MM-DD format
+  });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const tokenFromStorage = localStorage.getItem('token');
+    if (tokenFromStorage) {
+      const decodedToken = parseJwt(tokenFromStorage);
+      console.log("Decoded Token:", decodedToken);
+      if (decodedToken) {
+        setForm((prevForm) => ({
+            ...prevForm,
+            userid: decodedToken.userid, // Set userid directly from decoded token
+          }));
+          setToken(tokenFromStorage);
+
+      }
+    }
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch(`http://localhost:80/gigs/${gigid}/proposals/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(form),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(text);
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Proposal submitted successfully:', data);
+        navigate('/gig-workers');
+      })
+      .catch((error) => {
+        console.error('Error submitting proposal:', error.message);
+      });
+  };
+
+  return (
+    <div className="form-container">
+      <h2 className="page-title">Submit Proposal</h2>
+      <form onSubmit={handleSubmit} className="proposal-form">
+        <div className="form-group">
+          <label htmlFor="coverletter">Cover Letter</label>
+          <input
+            type="text"
+            id="coverletter"
+            name="coverletter"
+            value={form.coverletter}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="bidamount">Bid Amount</label>
+          <input
+            type="number"
+            id="bidamount"
+            name="bidamount"
+            value={form.bidamount}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="status">Status</label>
+          <select
+            id="status"
+            name="status"
+            value={form.status}
+            onChange={handleChange}
+            required
+          >
+            <option value="Pending">Pending</option>
+            <option value="Accepted">Accepted</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="datesubmitted">Date Submitted</label>
+          <input
+            type="date"
+            id="datesubmitted"
+            name="datesubmitted"
+            value={form.datesubmitted}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <button type="submit" className="btn">Submit Proposal</button>
+      </form>
+    </div>
+  );
+};
+
+export default ProposalFormPage;

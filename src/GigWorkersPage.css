@@ -1,0 +1,82 @@
+.gig-workers-page {
+  padding: 20px;
+}
+
+.page-title {
+  text-align: center;
+}
+
+.search-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-bar {
+  display: block;
+  margin: 0 auto;
+  padding: 10px;
+  width: 80%;
+  max-width: 600px;
+  font-size: 16px;
+}
+
+.filter-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.filter-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.filter-button img {
+  width: 50px;
+  height: 50px;
+}
+
+.filter-button:hover {
+  transform: scale(1.1);
+}
+
+.gig-results {
+  margin-top: 20px;
+}
+
+.gig-result {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.gig-result h3 {
+  margin: 0;
+}
+
+.gig-result p {
+  margin: 5px 0;
+}
+
+.btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  margin: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn:hover {
+  background-color: #4CAF50
+}

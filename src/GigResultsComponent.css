@@ -1,0 +1,21 @@
+.gig-results {
+    margin-top: 20px;
+  }
+
+  .gig-result {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .gig-title {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+
+  .gig-description {
+    font-size: 14px;
+    color: #555;
+  }

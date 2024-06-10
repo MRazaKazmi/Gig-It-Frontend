@@ -1,5 +1,4 @@
-/* General Layout */
-.container {
+.gig-bosses-page {
   text-align: center;
   margin: 20px;
 }
@@ -7,10 +6,12 @@
 .page-title {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #333;
 }
 
-/* Buttons */
+.main-container {
+  text-align: center;
+  padding: 20px;
+}
 .btn {
   background-color: #4CAF50;
   color: white;
@@ -24,20 +25,4 @@
 
 .btn:hover {
   background-color: #4CAF50
-}
-
-/* Specific Page Styles */
-.gig-workers-page, .gig-bosses-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.search-bar {
-  margin-bottom: 20px;
-}
-
-.gig-results {
-  width: 80%;
-  margin-top: 20px;
 }

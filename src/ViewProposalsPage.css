@@ -1,0 +1,28 @@
+.proposals-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+  }
+
+  .page-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .proposals-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .proposals-table th, .proposals-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .proposals-table th {
+    background-color: #f2f2f2;
+  }
