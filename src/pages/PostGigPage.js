@@ -22,8 +22,8 @@ const PostGigPage = () => {
     type:'',
     location: '',
     budget: '',
-    dateposted: new Date().toISOString().split('T')[0], // current date in YYYY-MM-DD format
-    status: 'Open' // default status
+    dateposted: new Date().toISOString().split('T')[0],
+    status: 'Open'
   });
 
   useEffect(() => {
@@ -34,10 +34,10 @@ const PostGigPage = () => {
       if (decodedToken) {
         setForm((prevForm) => ({
           ...prevForm,
-          userid: decodedToken.user.userid, // Set userid directly from decoded token
+          userid: decodedToken.userid, // Set userid directly from decoded token
         }));
         setToken(tokenFromStorage);
-        setUserRole(decodedToken.user.usertype); // Assuming the token contains user role as 'role'
+        setUserRole(decodedToken.usertype); // Assuming the token contains user role as 'role'
 
       }
     }

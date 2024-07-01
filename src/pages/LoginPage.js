@@ -23,13 +23,19 @@ const LoginPage = () => {
           localStorage.setItem('token', data.token); // Store token in local storage
 
           // Decode token to get user type
-          const decodedToken = JSON.parse(atob(data.token.split('.')[1]));
-          const usertype = decodedToken.usertype;
+          try {
+            const decodedToken = JSON.parse(atob(data.token.split('.')[1]));
+            const usertype = decodedToken.usertype;
+            console.log(decodedToken);
 
-          if (usertype === 'worker') {
-            navigate('/gig-workers');
-          } else {
-            navigate('/gig-bosses');
+            if (usertype === 'worker') {
+              navigate('/gig-workers');
+            } else {
+              navigate('/gig-bosses');
+            }
+          } catch (error) {
+            console.error('Error decoding token:', error);
+            setMessage('Failed to decode token.');
           }
         } else {
           setMessage('Invalid email or password');
@@ -40,6 +46,7 @@ const LoginPage = () => {
         setMessage('An error occurred. Please try again.');
       });
   };
+
 
   return (
     <div className="auth-page">

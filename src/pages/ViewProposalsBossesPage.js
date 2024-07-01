@@ -22,9 +22,9 @@ const ViewProposalsBossesPage = () => {
       const decodedToken = parseJwt(tokenFromStorage);
       console.log("Decoded Token:", decodedToken);
       if (decodedToken) {
-        setUserId(decodedToken.user.userid); // Assuming the token contains user ID as 'userid'
+        setUserId(decodedToken.userid); // Assuming the token contains user ID as 'userid'
         setToken(tokenFromStorage);
-        fetchProposals(decodedToken.user.userid, tokenFromStorage);
+        fetchProposals(decodedToken.userid, tokenFromStorage);
       }
     }
   }, []);
