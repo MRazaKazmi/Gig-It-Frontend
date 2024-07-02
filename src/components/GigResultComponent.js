@@ -17,7 +17,7 @@ const GigResult = ({ gig }) => {
       <p><strong>Type:</strong> {gig.type}</p>
       <p><strong>Budget:</strong> ${gig.budget}</p>
       <p><strong>Status:</strong> {gig.status}</p>
-      {gig.status !== 'Closed' && (
+      {(gig.status !== 'Closed')&& (
         <div className="buttons-container">
           <button className="propose-button" onClick={handleProposeClick}>Propose</button>
         </div>

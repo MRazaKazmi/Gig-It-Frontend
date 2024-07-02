@@ -102,19 +102,33 @@ const ViewProposalsBossesPage = () => {
       .catch(error => console.error('Error updating proposal status:', error));
   };
 
-  return (
-    <div className="proposals-container">
-      <h2>View Proposals</h2>
-      {proposals.length === 0 ? (
-        <p>No proposals found.</p>
-      ) : (
-        <ul className="proposals-list">
+
+return (
+  <div className="proposals-container">
+    <h2 className="page-title">View Proposals</h2>
+    {proposals.length === 0 ? (
+      <p>No proposals found for your gigs.</p>
+    ) : (
+      <table className="proposals-table">
+        <thead>
+          <tr>
+            <th>Proposal ID</th>
+            <th>Cover Letter</th>
+            <th>Bid Amount</th>
+            <th>Status</th>
+            <th>Date Submitted</th>
+            <th>Change Status</th> {/* Column for changing status */}
+          </tr>
+        </thead>
+        <tbody>
           {proposals.map((proposal) => (
-            <li key={proposal.proposalid} className="proposal-item">
-              <div className="proposal-info">
-                <p><strong>Cover Letter:</strong> {proposal.coverletter}</p>
-                <p><strong>Date Submitted:</strong> {new Date(proposal.datesubmitted).toLocaleDateString()}</p>
-                <p><strong>Status:</strong></p>
+            <tr key={proposal.proposalid}>
+              <td>{proposal.proposalid}</td>
+              <td>{proposal.coverletter}</td>
+              <td>{proposal.bidamount}</td>
+              <td>{proposal.status}</td>
+              <td>{new Date(proposal.datesubmitted).toLocaleDateString()}</td>
+              <td>
                 <select
                   value={proposal.status}
                   onChange={(e) => handleStatusChange(proposal.proposalid, e.target.value, proposal.gigid)}
@@ -123,13 +137,14 @@ const ViewProposalsBossesPage = () => {
                   <option value="accepted">Accepted</option>
                   <option value="rejected">Rejected</option>
                 </select>
-              </div>
-            </li>
+              </td>
+            </tr>
           ))}
-        </ul>
-      )}
-    </div>
-  );
-};
+        </tbody>
+      </table>
+    )}
+  </div>
+);
+}
 
 export default ViewProposalsBossesPage;
