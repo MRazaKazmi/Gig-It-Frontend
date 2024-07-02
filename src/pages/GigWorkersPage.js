@@ -16,7 +16,6 @@ const GigWorkersPage = () => {
   return (
     <div className="gig-workers-page">
     <div className="main-container">
-      <h2 className="page-title">Gig Workers Page</h2>
       <div>
         <h1>Welcome, Gig Worker!</h1>
         <p>

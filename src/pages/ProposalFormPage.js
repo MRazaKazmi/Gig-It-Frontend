@@ -99,20 +99,7 @@ const ProposalFormPage = () => {
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="status">Status</label>
-          <select
-            id="status"
-            name="status"
-            value={form.status}
-            onChange={handleChange}
-            required
-          >
-            <option value="Pending">Pending</option>
-            <option value="Accepted">Accepted</option>
-            <option value="Rejected">Rejected</option>
-          </select>
-        </div>
+
         <div className="form-group">
           <label htmlFor="datesubmitted">Date Submitted</label>
           <input

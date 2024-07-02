@@ -80,3 +80,30 @@
 .btn:hover {
   background-color: #4CAF50
 }
+
+.gig-result {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 10px;
+  position: relative;
+  transition: opacity 0.3s, text-decoration 0.3s;
+}
+
+.gig-result.closed {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+.propose-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.propose-button:hover {
+  background-color: #45a049;
+}

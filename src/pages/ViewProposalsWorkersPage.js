@@ -31,7 +31,7 @@ const ViewProposalsWorkersPage = () => {
 
   const fetchProposals = async (userId, token) => {
     try {
-      const response = await fetch(`http://localhost:80/proposals/p_user/${userId}`, {
+      const response = await fetch(`http://localhost:80/proposalswithgigs/p_user/${userId}`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
@@ -57,24 +57,24 @@ const ViewProposalsWorkersPage = () => {
           <thead>
             <tr>
               <th>Proposal ID</th>
-              <th>Gig Title</th>
-              <th>Proposal Title</th>
-              <th>Proposal Text</th>
-              <th>Budget</th>
+              <th>Gig</th>
+              <th>Gig Type</th>
+              <th>Cover Letter</th>
+              <th>Bid Amount</th>
               <th>Status</th>
               <th>Date Submitted</th>
             </tr>
           </thead>
           <tbody>
             {proposals.map((proposal) => (
-              <tr key={proposal.id}>
-                <td>{proposal.id}</td>
-                <td>{proposal.gigtitle}</td>
+              <tr key={proposal.proposalid}>
+                <td>{proposal.proposalid}</td>
                 <td>{proposal.title}</td>
-                <td>{proposal.proposaltext}</td>
-                <td>{proposal.budget}</td>
+                <td>{proposal.type}</td>
+                <td>{proposal.coverletter}</td>
+                <td>{proposal.bidamount}</td>
                 <td>{proposal.status}</td>
-                <td>{proposal.datesubmitted}</td>
+                <td>{new Date(proposal.datesubmitted).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>

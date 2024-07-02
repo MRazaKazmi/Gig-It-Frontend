@@ -12,73 +12,121 @@ const parseJwt = (token) => {
 
 const ViewProposalsBossesPage = () => {
   const [proposals, setProposals] = useState([]);
-  const [userId, setUserId] = useState('');
-  const [token, setToken] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const tokenFromStorage = localStorage.getItem('token');
     if (tokenFromStorage) {
       const decodedToken = parseJwt(tokenFromStorage);
-      console.log("Decoded Token:", decodedToken);
       if (decodedToken) {
-        setUserId(decodedToken.userid); // Assuming the token contains user ID as 'userid'
-        setToken(tokenFromStorage);
-        fetchProposals(decodedToken.userid, tokenFromStorage);
+        fetchProposals(tokenFromStorage, decodedToken.userid);
+      } else {
+        navigate('/login');
       }
+    } else {
+      navigate('/login');
     }
-  }, []);
+  }, [navigate]);
 
-  const fetchProposals = async (userId, token) => {
-    try {
-      const response = await fetch(`http://localhost:80/proposals/user/${userId}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
+  const fetchProposals = (token, userId) => {
+    fetch(`http://localhost:80/proposals/user/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Access denied, invalid token');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (Array.isArray(data)) {
+          setProposals(data);
+        } else {
+          console.error('Data is not an array:', data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching proposals:', error);
+        if (error.message === 'Access denied, invalid token') {
+          navigate('/login');
+        }
       });
-      if (!response.ok) {
-        throw new Error('Failed to fetch proposals');
-      }
-      const data = await response.json();
-      setProposals(data);
-    } catch (error) {
-      console.error('Error fetching proposals:', error.message);
-    }
+  };
+
+  const handleStatusChange = (proposalId, newStatus, gigId) => {
+    const token = localStorage.getItem('token');
+    fetch(`http://localhost:80/proposals/${proposalId}/status`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ status: newStatus }),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error updating proposal status');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Proposal status updated:', data);
+
+        // Only update the gig status if the proposal is accepted
+        if (newStatus === 'accepted') {
+          fetch(`http://localhost:80/gigs/${gigId}/status`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ status: 'Closed' }),
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Error updating gig status');
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('Gig status updated:', data);
+              setProposals(proposals.map(proposal => proposal.proposalid === proposalId ? { ...proposal, status: newStatus } : proposal));
+            })
+            .catch(error => console.error('Error updating gig status:', error));
+        } else {
+          setProposals(proposals.map(proposal => proposal.proposalid === proposalId ? { ...proposal, status: newStatus } : proposal));
+        }
+      })
+      .catch(error => console.error('Error updating proposal status:', error));
   };
 
   return (
     <div className="proposals-container">
-      <h2 className="page-title">View Proposals</h2>
+      <h2>View Proposals</h2>
       {proposals.length === 0 ? (
-        <p>No proposals found for your gigs.</p>
+        <p>No proposals found.</p>
       ) : (
-        <table className="proposals-table">
-          <thead>
-            <tr>
-              <th>Proposal ID</th>
-              <th>Gig Title</th>
-              <th>Proposal Title</th>
-              <th>Proposal Text</th>
-              <th>Budget</th>
-              <th>Status</th>
-              <th>Date Submitted</th>
-            </tr>
-          </thead>
-          <tbody>
-            {proposals.map((proposal) => (
-              <tr key={proposal.id}>
-                <td>{proposal.id}</td>
-                <td>{proposal.gigtitle}</td>
-                <td>{proposal.title}</td>
-                <td>{proposal.proposaltext}</td>
-                <td>{proposal.budget}</td>
-                <td>{proposal.status}</td>
-                <td>{proposal.datesubmitted}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <ul className="proposals-list">
+          {proposals.map((proposal) => (
+            <li key={proposal.proposalid} className="proposal-item">
+              <div className="proposal-info">
+                <p><strong>Cover Letter:</strong> {proposal.coverletter}</p>
+                <p><strong>Date Submitted:</strong> {new Date(proposal.datesubmitted).toLocaleDateString()}</p>
+                <p><strong>Status:</strong></p>
+                <select
+                  value={proposal.status}
+                  onChange={(e) => handleStatusChange(proposal.proposalid, e.target.value, proposal.gigid)}
+                >
+                  <option value="pending">Pending</option>
+                  <option value="accepted">Accepted</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+              </div>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );

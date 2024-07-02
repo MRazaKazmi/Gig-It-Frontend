@@ -73,7 +73,7 @@ const PostGigPage = () => {
       })
       .then((data) => {
         console.log('Gig posted successfully:', data);
-        // Redirect or update UI after successful submission
+        navigate('/gig-bosses')
       })
       .catch((error) => {
         console.error('Error posting gig:', error.message);

@@ -19,3 +19,29 @@
     font-size: 14px;
     color: #555;
   }
+  .buttons-container {
+    margin-top: 8px;
+  }
+
+  .propose-link {
+    display: inline-block;
+    margin-right: 8px;
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .propose-link:hover {
+    text-decoration: underline;
+  }
+
+  .propose-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+
+  .propose-button:hover {
+    background-color: #0056b3;
+  }
