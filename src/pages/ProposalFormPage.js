@@ -16,11 +16,10 @@ const ProposalFormPage = () => {
   const [form, setForm] = useState({
     gigid,
     userid: '',
-    title: '',
-    proposalText: '',
-    budget: '',
+    coverletter: '', // Initialize with an empty string or default value
+    bidamount: '', // Initialize with an empty string or default value
+    datesubmitted: new Date().toISOString().split('T')[0], // Initialize with today's date
     status: 'Pending', // default status
-    dateSubmitted: new Date().toISOString().split('T')[0], // current date in YYYY-MM-DD format
   });
   const navigate = useNavigate();
 
@@ -28,14 +27,12 @@ const ProposalFormPage = () => {
     const tokenFromStorage = localStorage.getItem('token');
     if (tokenFromStorage) {
       const decodedToken = parseJwt(tokenFromStorage);
-      console.log("Decoded Token:", decodedToken);
       if (decodedToken) {
         setForm((prevForm) => ({
-            ...prevForm,
-            userid: decodedToken.userid, // Set userid directly from decoded token
-          }));
-          setToken(tokenFromStorage);
-
+          ...prevForm,
+          userid: decodedToken.userid,
+        }));
+        setToken(tokenFromStorage);
       }
     }
   }, []);
@@ -51,7 +48,7 @@ const ProposalFormPage = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(form),
     })
@@ -111,7 +108,9 @@ const ProposalFormPage = () => {
             required
           />
         </div>
-        <button type="submit" className="btn">Submit Proposal</button>
+        <button type="submit" className="btn">
+          Submit Proposal
+        </button>
       </form>
     </div>
   );

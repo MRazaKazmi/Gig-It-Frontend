@@ -29,7 +29,7 @@ const ViewProposalsBossesPage = () => {
   }, [navigate]);
 
   const fetchProposals = (token, userId) => {
-    fetch(`http://localhost:80/proposals/user/${userId}`, {
+    fetch(`http://localhost:80/proposalswithgigs/user/${userId}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -113,6 +113,8 @@ return (
         <thead>
           <tr>
             <th>Proposal ID</th>
+            <th>Gig</th>
+            <th>Gig Type</th>
             <th>Cover Letter</th>
             <th>Bid Amount</th>
             <th>Status</th>
@@ -124,6 +126,8 @@ return (
           {proposals.map((proposal) => (
             <tr key={proposal.proposalid}>
               <td>{proposal.proposalid}</td>
+              <td>{proposal.title}</td>
+              <td>{proposal.type}</td>
               <td>{proposal.coverletter}</td>
               <td>{proposal.bidamount}</td>
               <td>{proposal.status}</td>
