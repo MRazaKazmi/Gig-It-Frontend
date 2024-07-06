@@ -12,7 +12,7 @@ const SignupPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('http://localhost:80/users/create', {
+    fetch('https://my-gigit-app-b9bbde9c9441.herokuapp.com/users/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

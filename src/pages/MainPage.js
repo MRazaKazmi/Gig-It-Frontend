@@ -6,7 +6,7 @@ const MainPage = () => {
   return (
     <div className="main-container">
       <div className="background-image-container">
-        <img src="/images/main-page-background-transformed.jpeg" alt="Construction" className="background-image" />
+        <img src="/images/mazdurr-screenshot.png" alt="Construction" className="background-image" />
         <div className="button-container">
           <Link to="/gig-workers">
             <button className="main-button">Gig Workers</button>

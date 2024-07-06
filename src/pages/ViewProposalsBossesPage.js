@@ -29,7 +29,7 @@ const ViewProposalsBossesPage = () => {
   }, [navigate]);
 
   const fetchProposals = (token, userId) => {
-    fetch(`http://localhost:80/proposalswithgigs/user/${userId}`, {
+    fetch(`https://my-gigit-app-b9bbde9c9441.herokuapp.com/proposalswithgigs/user/${userId}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -57,7 +57,7 @@ const ViewProposalsBossesPage = () => {
 
   const handleStatusChange = (proposalId, newStatus, gigId) => {
     const token = localStorage.getItem('token');
-    fetch(`http://localhost:80/proposals/${proposalId}/status`, {
+    fetch(`https://my-gigit-app-b9bbde9c9441.herokuapp.com/proposals/${proposalId}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ const ViewProposalsBossesPage = () => {
 
         // Only update the gig status if the proposal is accepted
         if (newStatus === 'accepted') {
-          fetch(`http://localhost:80/gigs/${gigId}/status`, {
+          fetch(`https://my-gigit-app-b9bbde9c9441.herokuapp.com/gigs/${gigId}/status`, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',

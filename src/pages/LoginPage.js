@@ -10,7 +10,7 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('http://localhost:80/users/auth', {
+    fetch('https://my-gigit-app-b9bbde9c9441.herokuapp.com/users/auth', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

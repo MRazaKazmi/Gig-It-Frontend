@@ -17,7 +17,7 @@ const FindGigPage = () => {
     }
     setToken(tokenFromStorage);
 
-    fetch('http://localhost:80/gigs', {
+    fetch('https://my-gigit-app-b9bbde9c9441.herokuapp.com/gigs', {
       headers: {
         Authorization: `Bearer ${tokenFromStorage}`
       }

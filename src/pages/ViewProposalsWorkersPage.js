@@ -31,7 +31,7 @@ const ViewProposalsWorkersPage = () => {
 
   const fetchProposals = async (userId, token) => {
     try {
-      const response = await fetch(`http://localhost:80/proposalswithgigs/p_user/${userId}`, {
+      const response = await fetch(`https://my-gigit-app-b9bbde9c9441.herokuapp.com/proposalswithgigs/p_user/${userId}`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
