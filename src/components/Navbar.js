@@ -7,9 +7,12 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("Navbar mounted");
     const token = localStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
     }
   }, []);
 
@@ -27,11 +30,9 @@ const Navbar = () => {
         </Link>
         <div className="navbar-links">
           {isLoggedIn ? (
-            <>
-              <button onClick={handleLogout} className="navbar-button">
-                Logout
-              </button>
-            </>
+            <button onClick={handleLogout} className="navbar-button">
+              Logout
+            </button>
           ) : (
             <>
               <Link to="/login" className="navbar-link">

@@ -25,7 +25,8 @@ const LoginPage = () => {
           // Decode token to get user type
           try {
             const decodedToken = JSON.parse(atob(data.token.split('.')[1]));
-            const usertype = decodedToken.usertype;
+            const usertype = decodedToken.usertype || (decodedToken.user && decodedToken.user.usertype);
+
             console.log(decodedToken);
 
             if (usertype === 'worker') {

@@ -4,7 +4,11 @@ import '../ViewProposalsPage.css';
 
 const parseJwt = (token) => {
   try {
-    return JSON.parse(atob(token.split('.')[1]));
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    return {
+      userid: decodedToken.userid || (decodedToken.user && decodedToken.user.userid),
+      usertype: decodedToken.usertype || (decodedToken.user && decodedToken.user.usertype)
+    };
   } catch (e) {
     return null;
   }
@@ -20,14 +24,17 @@ const ViewProposalsWorkersPage = () => {
     const tokenFromStorage = localStorage.getItem('token');
     if (tokenFromStorage) {
       const decodedToken = parseJwt(tokenFromStorage);
-      console.log("Decoded Token:", decodedToken);
       if (decodedToken) {
-        setUserId(decodedToken.userid); // Assuming the token contains user ID as 'userid'
+        setUserId(decodedToken.userid);
         setToken(tokenFromStorage);
         fetchProposals(decodedToken.userid, tokenFromStorage);
+      } else {
+        navigate('/login');
       }
+    } else {
+      navigate('/login');
     }
-  }, []);
+  }, [navigate]);
 
   const fetchProposals = async (userId, token) => {
     try {
@@ -44,6 +51,7 @@ const ViewProposalsWorkersPage = () => {
       setProposals(data);
     } catch (error) {
       console.error('Error fetching proposals:', error.message);
+      // Optionally handle error states here, e.g., setProposals([]) or display an error message
     }
   };
 

@@ -7,7 +7,6 @@ const FindGigPage = () => {
   const [gigs, setGigs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [workerType, setWorkerType] = useState('');
-  const [token, setToken] = useState('');
 
   useEffect(() => {
     const tokenFromStorage = localStorage.getItem('token');
@@ -15,7 +14,6 @@ const FindGigPage = () => {
       console.error('No token found. User is not authenticated.');
       return;
     }
-    setToken(tokenFromStorage);
 
     fetch('https://my-gigit-app-b9bbde9c9441.herokuapp.com/gigs', {
       headers: {
@@ -36,7 +34,7 @@ const FindGigPage = () => {
       }
     })
     .catch((error) => console.error('Error fetching gigs:', error));
-  }, [token]);
+  }, []); // Empty dependency array ensures this effect runs only once
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);

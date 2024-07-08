@@ -4,7 +4,11 @@ import '../ProposalFormPage.css';
 
 const parseJwt = (token) => {
   try {
-    return JSON.parse(atob(token.split('.')[1]));
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    return {
+      userid: decodedToken.userid || (decodedToken.user && decodedToken.user.userid),
+      usertype: decodedToken.usertype || (decodedToken.user && decodedToken.user.usertype)
+    };
   } catch (e) {
     return null;
   }
@@ -28,6 +32,7 @@ const ProposalFormPage = () => {
     if (tokenFromStorage) {
       const decodedToken = parseJwt(tokenFromStorage);
       if (decodedToken) {
+        console.log("Decoded Token:", decodedToken);
         setForm((prevForm) => ({
           ...prevForm,
           userid: decodedToken.userid,

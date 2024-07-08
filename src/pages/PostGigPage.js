@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import '../PostGigPage.css';
 import { useNavigate } from 'react-router-dom';
-
+import '../PostGigPage.css';
 
 const parseJwt = (token) => {
   try {
-    return JSON.parse(atob(token.split('.')[1]));
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    return {
+      userid: decodedToken.userid || (decodedToken.user && decodedToken.user.userid),
+      usertype: decodedToken.usertype || (decodedToken.user && decodedToken.user.usertype)
+    };
   } catch (e) {
     return null;
   }
 };
 
 const PostGigPage = () => {
-  const [token, setToken] = useState('');
   const [userRole, setUserRole] = useState('');
   const navigate = useNavigate();
   const [form, setForm] = useState({
     userid: '',
     title: '',
     description: '',
-    type:'',
+    type: '',
     location: '',
     budget: '',
     dateposted: new Date().toISOString().split('T')[0],
@@ -30,22 +32,19 @@ const PostGigPage = () => {
     const tokenFromStorage = localStorage.getItem('token');
     if (tokenFromStorage) {
       const decodedToken = parseJwt(tokenFromStorage);
-      console.log("Decoded Token:", decodedToken);
       if (decodedToken) {
+        console.log("Decoded Token:", decodedToken);
         setForm((prevForm) => ({
           ...prevForm,
-          userid: decodedToken.userid, // Set userid directly from decoded token
+          userid: decodedToken.userid,
         }));
-        setToken(tokenFromStorage);
-        setUserRole(decodedToken.usertype); // Assuming the token contains user role as 'role'
-
+        setUserRole(decodedToken.usertype);
       }
     }
   }, []);
 
   useEffect(() => {
     if (userRole && userRole !== 'boss') {
-      // Redirect if the user is not a gig boss
       navigate('/');
     }
   }, [userRole, navigate]);
@@ -57,11 +56,16 @@ const PostGigPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const tokenFromStorage = localStorage.getItem('token');
+    if (!tokenFromStorage) {
+      console.error('No token found. User is not authenticated.');
+      return;
+    }
     fetch('https://my-gigit-app-b9bbde9c9441.herokuapp.com/gigs/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${tokenFromStorage}`
       },
       body: JSON.stringify(form)
     })
@@ -73,12 +77,13 @@ const PostGigPage = () => {
       })
       .then((data) => {
         console.log('Gig posted successfully:', data);
-        navigate('/gig-bosses')
+        navigate('/gig-bosses');
       })
       .catch((error) => {
         console.error('Error posting gig:', error.message);
       });
   };
+
   return (
     <div className="form-container">
       <h2 className="page-title">Post a Gig</h2>
@@ -151,7 +156,7 @@ const PostGigPage = () => {
             type="date"
             id="dateposted"
             name="dateposted"
-            value={form.datePosted}
+            value={form.dateposted}
             onChange={handleChange}
             required
           />
