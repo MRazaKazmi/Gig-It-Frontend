@@ -15,7 +15,7 @@ const FindGigPage = () => {
       return;
     }
 
-    fetch('https://my-gigit-app-b9bbde9c9441.herokuapp.com/gigs', {
+    fetch('http://gigit-mazdurr-prod-4.eba-ppjprm6r.eu-north-1.elasticbeanstalk.com/gigs', {
       headers: {
         Authorization: `Bearer ${tokenFromStorage}`
       }

@@ -49,7 +49,7 @@ const ProposalFormPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`https://my-gigit-app-b9bbde9c9441.herokuapp.com/gigs/${gigid}/proposals/create`, {
+    fetch(`http://gigit-mazdurr-prod-4.eba-ppjprm6r.eu-north-1.elasticbeanstalk.com/gigs/${gigid}/proposals/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

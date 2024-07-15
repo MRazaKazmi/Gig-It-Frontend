@@ -61,7 +61,7 @@ const PostGigPage = () => {
       console.error('No token found. User is not authenticated.');
       return;
     }
-    fetch('https://my-gigit-app-b9bbde9c9441.herokuapp.com/gigs/create', {
+    fetch('http://gigit-mazdurr-prod-4.eba-ppjprm6r.eu-north-1.elasticbeanstalk.com/gigs/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

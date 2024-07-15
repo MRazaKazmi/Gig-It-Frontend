@@ -12,7 +12,7 @@ const SignupPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('https://my-gigit-app-b9bbde9c9441.herokuapp.com/users/create', {
+    fetch('http://gigit-mazdurr-prod-4.eba-ppjprm6r.eu-north-1.elasticbeanstalk.com/users/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

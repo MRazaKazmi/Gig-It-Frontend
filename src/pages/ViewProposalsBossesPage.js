@@ -19,7 +19,7 @@ const ViewProposalsBossesPage = () => {
   const navigate = useNavigate();
 
   const fetchProposals = useCallback((token, userId) => {
-    fetch(`https://my-gigit-app-b9bbde9c9441.herokuapp.com/proposalswithgigs/user/${userId}`, {
+    fetch(`http://gigit-mazdurr-prod-4.eba-ppjprm6r.eu-north-1.elasticbeanstalk.com/proposalswithgigs/user/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -61,7 +61,7 @@ const ViewProposalsBossesPage = () => {
 
   const handleStatusChange = (proposalId, newStatus, gigId) => {
     const token = localStorage.getItem('token');
-    fetch(`https://my-gigit-app-b9bbde9c9441.herokuapp.com/proposals/${proposalId}/status`, {
+    fetch(`http://gigit-mazdurr-prod-4.eba-ppjprm6r.eu-north-1.elasticbeanstalk.com/proposals/${proposalId}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ const ViewProposalsBossesPage = () => {
 
         // Only update the gig status if the proposal is accepted
         if (newStatus === 'accepted') {
-          fetch(`https://my-gigit-app-b9bbde9c9441.herokuapp.com/gigs/${gigId}/status`, {
+          fetch(`http://gigit-mazdurr-prod-4.eba-ppjprm6r.eu-north-1.elasticbeanstalk.com/gigs/${gigId}/status`, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',
