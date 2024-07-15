@@ -19,5 +19,10 @@ http://gig-it.s3-website.eu-north-1.amazonaws.com/
 - To install all the packages: `npm install`
 - To run the app in development mode: `npm start`
 
+## Project Deployment
+- Frontend: S3
+- Backend: Elastic Beanstalk
+- Database: RDS
+
 ## Project Author
 Raza Kazmi
