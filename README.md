@@ -20,9 +20,9 @@ http://gig-it.s3-website.eu-north-1.amazonaws.com/
 - To run the app in development mode: `npm start`
 
 ## Project Deployment
-- Frontend: S3
-- Backend: Elastic Beanstalk
-- Database: RDS
+- Frontend: AWS S3
+- Backend: AWS Elastic Beanstalk
+- Database: AWS RDS
 
 ## Project Author
 Raza Kazmi
